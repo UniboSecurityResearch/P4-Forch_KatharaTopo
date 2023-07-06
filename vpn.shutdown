@@ -1,0 +1,4 @@
+rm /shared/ca.crt
+rm /shared/client.crt
+rm /shared/client.key
+rm /shared/ta.key

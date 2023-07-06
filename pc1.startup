@@ -1,0 +1,16 @@
+# STEP 5
+cp /usr/share/doc/openvpn/examples/sample-config-files/client.conf ~
+
+# STEP 6-7
+sed -i -e 's|remote my-server-1 1194.*$|remote 200.200.200.131 1194 |' ~/client.conf
+sed -i -e 's|ca ca.crt.*$|ca /shared/ca.crt |' ~/client.conf
+sed -i -e 's|cert client.crt.*$|cert /shared/client.crt |' ~/client.conf
+sed -i -e 's|key client.key.*$|key /shared/client.key |' ~/client.conf
+sed -i -e 's|tls-auth ta.key 1.*$|tls-auth /shared/ta.key 1 |' ~/client.conf
+
+
+mkdir -p /dev/net
+mknod /dev/net/tun c 10 200
+chmod 600 /dev/net/tun
+
+nohup openvpn /root/client.conf &

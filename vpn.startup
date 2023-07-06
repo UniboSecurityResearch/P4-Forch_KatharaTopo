@@ -1,0 +1,44 @@
+# STEP 1
+cp -r /usr/share/easy-rsa /etc/openvpn/
+cp /etc/openvpn/easy-rsa/vars.example /etc/openvpn/easy-rsa/vars
+
+echo 'set_var KEY_COUNTRY "ITALY"' >> /etc/openvpn/easy-rsa/vars
+echo 'set_var KEY_CITY "Bologna"'  >> /etc/openvpn/easy-rsa/vars
+echo 'set_var KEY_ORG "Ulisse"'  >> /etc/openvpn/easy-rsa/vars
+echo 'set_var KEY_EMAIL "admin@example.com"'  >> /etc/openvpn/easy-rsa/vars
+echo 'set_var KEY_OU "OpenVPN"'  >> /etc/openvpn/easy-rsa/vars
+
+/etc/openvpn/easy-rsa/easyrsa init-pki
+
+echo "EASY-RSA CA" | /etc/openvpn/easy-rsa/easyrsa build-ca nopass
+
+echo "server" | /etc/openvpn/easy-rsa/easyrsa gen-req server nopass
+echo "yes" | /etc/openvpn/easy-rsa/easyrsa sign-req server server
+echo "client" | /etc/openvpn/easy-rsa/easyrsa gen-req client nopass
+echo "yes" | /etc/openvpn/easy-rsa/easyrsa sign-req client client
+
+# STEP 3
+/etc/openvpn/easy-rsa/easyrsa gen-dh
+
+# STEP 4
+openvpn --genkey --secret ta.key
+cp ta.key /etc/openvpn
+
+# STEP 6
+cp /pki/ca.crt /shared/
+cp /pki/issued/client.crt /shared/
+cp /pki/private/client.key /shared/
+cp /etc/openvpn/ta.key /shared/
+
+# STEP 8
+cp /pki/ca.crt /etc/openvpn/
+cp /pki/dh.pem /etc/openvpn/
+cp /pki/issued/server.crt /etc/openvpn/
+cp /pki/private/server.key /etc/openvpn/
+
+# STEP 11
+mkdir -p /dev/net
+mknod /dev/net/tun c 10 200
+chmod 600 /dev/net/tun
+
+openvpn /etc/openvpn/server.conf

@@ -1,0 +1,6 @@
+#nao deveria ser necessario. kathara apenas copia ficheiros apos iniciar rede.
+/etc/init.d/networking restart
+
+/etc/init.d/apache2 start
+/etc/init.d/ssh start
+/etc/init.d/exim4 start
