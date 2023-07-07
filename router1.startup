@@ -1,31 +1,10 @@
-# #!/bin/sh
-# # by: "John Hazelwood" <jhazelwo@users.noreply.github.com>
-# #
-# # iptables rules to only allow VPN traffic AND let user SSH to VPN server itself.
-# # Use this on a CentOS/RedHat server you have set up to be a NAT firewall for your network. 
-# # This will force ALL Internet traffic to go over the VPN 
-# #    and will BLOCK ALL Internet TRAFFIC if VPN is not running!
-# #
-# # use `service iptables save` to save the rules to /etc/sysconfig/iptables
-# # made 
-# #
-echo hi
-VPNServer="200.200.200.131" # Change to ip or host of your VPN server
-TUNip="200.200.200.1"
+VPNServer="200.200.200.131" # Ip of the VPN server
 wan="eth2"  # interface connected to the Internet
-lan="eth0"  # interface to your workstation or router
-
+lan="eth0"  # interface to IT
 
 #Allow VPN traffic
 /sbin/iptables -A FORWARD -i $wan --destination $VPNServer --protocol udp --dport 1194 -o $lan -j ACCEPT
 /sbin/iptables -A FORWARD -i $lan --source $VPNServer --protocol udp --sport 1194 -o $wan -j ACCEPT
-
-# /sbin/iptables -A FORWARD -i $wan --destination $VPNServer --protocol tcp --dport 1194 -o $lan -j ACCEPT
-# /sbin/iptables -A FORWARD -i $lan --source $VPNServer --protocol udp --sport 1194 -o $wan 
-
-
-# /sbin/iptables -A FORWARD -i $wan --destination $TUNip -j DROP
-# /sbin/iptables -A FORWARD -i $lan --source $TUNip -j DROP
 
 # Enable NAT
 /sbin/iptables -t nat -A POSTROUTING -j MASQUERADE
