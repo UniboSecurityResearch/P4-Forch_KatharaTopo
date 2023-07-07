@@ -13,4 +13,4 @@ mkdir -p /dev/net
 mknod /dev/net/tun c 10 200
 chmod 600 /dev/net/tun
 
-nohup openvpn /root/client.conf &
+nohup openvpn --config /root/client.conf --comp-lzo &
