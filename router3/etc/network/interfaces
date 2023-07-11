@@ -2,15 +2,18 @@
 # and how to activate them. For more information, see interfaces(5).
 
 # The loopback network interface
-auto lo eth0
+auto lo eth0 eth1
 iface lo inet loopback
 
 # The primary network interface
 #allow-hotplug eth0
 #iface eth0 inet dhcp
 
-iface eth0 inet static
-address 192.168.1.2
-netmask 255.255.255.0
-gateway 192.168.1.254
 
+iface eth0 inet static
+    address 192.168.0.1
+	netmask 255.255.255.0
+
+iface eth1 inet static
+	address 192.168.1.254
+	netmask 255.255.255.0

@@ -17,6 +17,7 @@ iface eth0 inet static
 iface eth1 inet static
 	address 192.168.0.254
 	netmask 255.255.255.0
+	up ip route add 192.168.1.0/24 via 192.168.0.1
 
 iface eth2 inet static
 	address 2.3.5.1
