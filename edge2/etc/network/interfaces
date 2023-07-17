@@ -10,6 +10,7 @@ iface lo inet loopback
 #iface eth0 inet dhcp
 
 iface eth0 inet static
-address 192.168.1.4
-netmask 255.255.255.0
-gateway 192.168.1.254
+    address 192.168.1.4
+    netmask 255.255.255.0
+    gateway 192.168.1.254
+    hwaddress ether 00:00:0a:00:00:04

@@ -3,12 +3,12 @@ wan="eth2"  # interface connected to the Internet
 lan="eth0"  # interface to IT
 
 #Allow VPN traffic
-/sbin/iptables -A FORWARD -i $wan --destination $VPNServer --protocol udp --dport 1194 -o $lan -j ACCEPT
-/sbin/iptables -A FORWARD -i $lan --source $VPNServer --protocol udp --sport 1194 -o $wan -j ACCEPT
+/usr/sbin/iptables -A FORWARD -i $wan --destination $VPNServer --protocol udp --dport 1194 -o $lan -j ACCEPT
+/usr/sbin/iptables -A FORWARD -i $lan --source $VPNServer --protocol udp --sport 1194 -o $wan -j ACCEPT
 
 # Enable NAT
-/sbin/iptables -t nat -A POSTROUTING -j MASQUERADE
+/usr/sbin/iptables -t nat -A POSTROUTING -j MASQUERADE
 
 # Block everything else from and to internet
-/sbin/iptables -A FORWARD -o $wan -j DROP
-/sbin/iptables -A FORWARD -i $wan -j DROP
+/usr/sbin/iptables -A FORWARD -o $wan -j DROP
+/usr/sbin/iptables -A FORWARD -i $wan -j DROP
