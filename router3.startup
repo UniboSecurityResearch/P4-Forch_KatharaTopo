@@ -1,6 +1,12 @@
+ip link set eth0 address 00:00:0a:00:00:ff
+ip link set eth1 address 00:00:0a:00:01:ff
+ip link set eth2 address 00:00:0a:00:02:ff
+ip link set eth3 address 00:00:0a:00:03:ff
+ip link set eth4 address 00:00:0a:00:04:ff
+
 #P4_16 commands
 p4c /root/p4/program.p4 -o /root/p4/
-simple_switch -i 1@eth0 -i 2@eth1 /root/p4/program.json &
+simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 -i 5@eth4 /root/p4/program.json &
 
 while [[ $(pgrep simple_switch) -eq 0 ]]; do sleep 1; done
 until simple_switch_CLI <<< "help"; do sleep 1; done
