@@ -2,8 +2,11 @@
 #include <core.p4>
 #include <v1model.p4>
 
+#define MAX_TCP_PAYLOAD_IN_BITS 65535;
+
 const bit<16> TYPE_IPV4 = 0x0800;
 const bit<16> TYPE_ARP  = 0x0806;
+const bit<8>  TYPE_TCP  = 6;
 
 // ARP RELATED CONST VARS
 const bit<16> ARP_HTYPE = 0x0001; //Ethernet Hardware type is 1
@@ -56,6 +59,43 @@ header ipv4_t {
     ip4Addr_t dstAddr;
 }
 
+header tcp_t{
+    bit<16> srcPort;
+    bit<16> dstPort;
+    bit<32> seqNo;
+    bit<32> ackNo;
+    bit<4>  dataOffset;
+    bit<4>  res;
+    bit<1>  cwr;
+    bit<1>  ece;
+    bit<1>  urg;
+    bit<1>  ack;
+    bit<1>  psh;
+    bit<1>  rst;
+    bit<1>  syn;
+    bit<1>  fin;
+    bit<16> window;
+    bit<16> checksum;
+    bit<16> urgentPtr;
+}
+
+header udp_t {
+    bit<16>  srcPort;
+    bit<16>  dstPort;
+    bit<16>  udplen;
+    bit<16>  udpchk;
+}
+
+header icmp_t {
+    bit<8> type;
+    bit<8> code;
+    bit<16> checksum;
+}
+
+header payload_t{
+    bit<2048> payload;
+}
+
 struct metadata {
     /* empty */
 }
@@ -64,6 +104,10 @@ struct headers {
     ethernet_t   ethernet;
     arp_t        arp;
     ipv4_t       ipv4;
+    tcp_t        tcp;
+    udp_t        udp;
+    icmp_t       icmp;
+    payload_t    payload;
 }
 
 /*************************************************************************
@@ -94,9 +138,35 @@ parser MyParser(packet_in packet,
 
 
     state parse_ipv4 {
-      packet.extract(hdr.ipv4);
-      transition accept;
+        packet.extract(hdr.ipv4);
+        transition select(hdr.ipv4.protocol){
+            8w0x01: parse_icmp;
+            TYPE_TCP: tcp;
+            8w0x11: parse_udp;
+            default: accept;
+        }
     }
+
+    state parse_icmp {
+        packet.extract(hdr.icmp);
+        transition accept;
+    }
+
+    state tcp {
+       packet.extract(hdr.tcp);
+       transition accept;
+    }
+
+    state parse_udp {
+       packet.extract(hdr.udp);
+       transition accept;
+    }
+/*
+    state parse_tcp_payload {
+        packet.extract(hdr.payload);
+        transition accept;
+    }
+*/
 }
 
 
@@ -116,6 +186,9 @@ control MyVerifyChecksum(inout headers hdr, inout metadata meta) {
 control MyIngress(inout headers hdr,
                   inout metadata meta,
                   inout standard_metadata_t standard_metadata) {
+
+    register<bit<2048>>(1) payload_data;
+
     action drop() {
         mark_to_drop(standard_metadata);
     }
@@ -192,10 +265,11 @@ control MyIngress(inout headers hdr,
     }
 
     apply {
-
+        if (hdr.tcp.isValid()) {
+            payload_data.write(0, hdr.payload.payload);
+        }
         if (hdr.ipv4.isValid()) {
             ipv4_exact.apply();
-            //ipv4_lpm.apply();
         } 
         else if (hdr.ethernet.etherType == TYPE_ARP)
         {
@@ -255,6 +329,10 @@ control MyDeparser(packet_out packet, in headers hdr) {
         packet.emit(hdr.ethernet);
         packet.emit(hdr.arp);
         packet.emit(hdr.ipv4);
+        packet.emit(hdr.icmp);
+        packet.emit(hdr.udp);
+        packet.emit(hdr.tcp);
+        //packet.emit(hdr.payload);
     }
 }
 
