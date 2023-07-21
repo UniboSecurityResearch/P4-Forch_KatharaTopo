@@ -16,5 +16,3 @@ chmod 600 /dev/net/tun
 
 while [[ ! -f /shared/ta.key ]]; do sleep 1; done
 openvpn /root/client.conf
-
-apt -y install iperf3
