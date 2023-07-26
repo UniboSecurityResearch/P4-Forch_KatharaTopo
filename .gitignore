@@ -348,3 +348,12 @@ TSWLatexianTemp*
 
 # old files folder
 _old
+
+# shared VPN files
+./shared/ca.crt
+./shared/client.crt
+./shared/client.key
+./shared/ta.key
+
+# test results
+test/results*

@@ -4,6 +4,8 @@ ip link set eth2 address 00:00:0a:00:02:ff
 ip link set eth3 address 00:00:0a:00:03:ff
 ip link set eth4 address 00:00:0a:00:04:ff
 
+chmod u+x /retrieve_info.sh
+
 #P4_16 commands
 p4c /root/p4/program.p4 -o /root/p4/
 simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 -i 5@eth4 /root/p4/program.json &
