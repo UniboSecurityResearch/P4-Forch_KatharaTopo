@@ -2,7 +2,7 @@
 #include <core.p4>
 #include <v1model.p4>
 
-#define MAX_TCP_PAYLOAD_IN_BITS 65535;
+#define COLLECTION_TIMEDELTA 500000
 
 const bit<16> TYPE_IPV4 = 0x0800;
 const bit<16> TYPE_ARP  = 0x0806;
@@ -186,7 +186,9 @@ control MyVerifyChecksum(inout headers hdr, inout metadata meta) {
 control MyIngress(inout headers hdr,
                   inout metadata meta,
                   inout standard_metadata_t standard_metadata) {
-
+    
+    
+    
     register<bit<2048>>(1) payload_data;
 
     action drop() {
@@ -291,7 +293,57 @@ control MyIngress(inout headers hdr,
 control MyEgress(inout headers hdr,
                  inout metadata meta,
                  inout standard_metadata_t standard_metadata) {
-    apply {  }
+    register<bit<48>>(100) packet_processing_time_array; //egress timestamp - ingress timestamp
+    register<bit<32>>(100) packet_enqueuing_time_array; //enq_timestamp
+    register<bit<19>>(100) packet_enqueuing_depth_array; //enq_qdepth
+    register<bit<32>>(100) packet_dequeuing_timedelta_array; //deq_timedelta
+    register<bit<19>>(100) packet_dequeuing_depth_array; //deq_qdepth
+    
+    register<bit<48>>(1) timestamp_last_seen_packet;
+    register<bit<32>>(1) last_saved_index;
+    bit<48> diff_time;
+    bit<48> last_time;
+    bit<32> current_index;
+
+
+    apply {  
+        timestamp_last_seen_packet.read(last_time,     0);
+
+        diff_time = standard_metadata.ingress_global_timestamp - last_time;
+        if (diff_time > (bit<48>)COLLECTION_TIMEDELTA) { //grab info everytime the window is hit
+            //retrieve index
+            last_saved_index.read(current_index,     0);
+            
+            //retrieve packet processing time
+            packet_processing_time_array.write(current_index,     
+                standard_metadata.egress_global_timestamp-standard_metadata.ingress_global_timestamp);
+            
+            //retrieve enqueuing timestamp
+            packet_enqueuing_time_array.write(current_index,     
+                standard_metadata.enq_timestamp);
+
+            //retrieve enqueue depth 
+            packet_enqueuing_depth_array.write(current_index,     
+                standard_metadata.enq_qdepth);
+
+            //retrieve dequeue timedelta 
+            packet_dequeuing_timedelta_array.write(current_index,     
+                standard_metadata.deq_timedelta);
+
+            //retrieve dequeuing timestamp
+            packet_dequeuing_depth_array.write(current_index,     
+                standard_metadata.deq_qdepth);
+
+            //update index
+            last_saved_index.write(0,     current_index + 1);
+            if(current_index + 1 > 99){
+                last_saved_index.write(0,     0);
+            }
+            
+            //reset time window
+            timestamp_last_seen_packet.write(0,     standard_metadata.ingress_global_timestamp);  
+        }
+    }
 }
 
 /*************************************************************************
