@@ -5,12 +5,29 @@ set -e
 
 usage()
 {
-    echo "usage: ./test_network.sh [[-d data_size -i interval] | [-h]]"
+    echo "usage: ./test_network.sh [[-d data_size -i interval] [--crc] | [-h]]"
 }
 
 test()
-{
+{   
     cd ../
+    if [[ "$crc" == "true" && "$data_size" -eq 256 ]]
+    then
+        sed -i -e 's|program|program_withcrc_payload_256|' ./router3.startup
+        perl -e 'print "A"x256' > ./client1/root/payload.txt
+    fi
+    if [[ "$crc" == "true" && "$data_size" -eq 512 ]]
+    then
+        sed -i -e 's|program|program_withcrc_payload_512|' ./router3.startup
+        perl -e 'print "A"x512' > ./client1/root/payload.txt
+    fi
+    if [[ "$crc" == "true" && "$data_size" -eq 1024 ]]
+    then
+        sed -i -e 's|program|program_withcrc_payload_1024|' ./router3.startup
+        perl -e 'print "A"x1024' > ./client1/root/payload.txt
+    fi
+
+    
     echo ""
     echo "Starting kathara lab..."
     kathara lstart --noterminals
@@ -21,7 +38,14 @@ test()
 
     echo ""
     echo "Testing lab with packet of size of ${data_size} bytes and interval of ${interval} microseconds."
-    kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval}" --no-stdout &
+    if [[ "$crc" == "true" ]]
+    then
+        echo "CRC enabled."
+        kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
+    else
+        kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval}" --no-stdout --no-stderr &
+    fi
+    
     for i in {1..60}; do
         sleep 1
         printf "\r   Test ends in $((60-${i})) seconds. "
@@ -31,12 +55,31 @@ test()
     echo ""
     echo "Saving results."
     kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
-    mv ./shared/results.txt ./test/results_d${data_size}_i${interval}.txt
+    
+    if [[ "$crc" == "true" ]]
+    then
+        mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_crc.txt
+    else
+        mv ./shared/results.txt ./test/results_d${data_size}_i${interval}.txt
+    fi
 
     echo ""
     echo "Stopping kathara lab..."
     kathara lclean
     #/usr/bin/time -o ./test/time_clean.txt -p kathara lclean
+
+    if [[ "$crc" == "true" && "$data_size" -eq 256 ]]
+    then
+        sed -i -e 's|program_withcrc_payload_256|program|' ./router3.startup
+    fi
+    if [[ "$crc" == "true" && "$data_size" -eq 512 ]]
+    then
+        sed -i -e 's|program_withcrc_payload_512|program|' ./router3.startup
+    fi
+    if [[ "$crc" == "true" && "$data_size" -eq 1024 ]]
+    then
+        sed -i -e 's|program_withcrc_payload_1024|program|' ./router3.startup
+    fi
 
     echo ""
     echo "Done."
@@ -45,6 +88,7 @@ test()
 
 data_size=""
 interval=""
+crc=""
 
 while [ "$1" != "" ]; do
     case $1 in
@@ -61,6 +105,9 @@ while [ "$1" != "" ]; do
             then
                 interval=$1
             fi
+        ;;
+        --crc )       
+            crc="true"
         ;;
         -h | --help )           
             usage
