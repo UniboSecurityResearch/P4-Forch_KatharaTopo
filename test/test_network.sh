@@ -117,7 +117,6 @@ test()
         sed -i -e 's|program_withcrc32_payload_1024|program|' ./router3.startup
     fi
 
-    echo ""
     cd ./test
 
     if [[ "$crc32" == "true" ]]
