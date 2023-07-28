@@ -5,25 +5,41 @@ set -e
 
 usage()
 {
-    echo "usage: ./test_network.sh [[-d data_size -i interval] [--crc] | [-h]]"
+    echo "usage: ./test_network.sh [[-d data_size -i interval] [--crc16] [--crc32]| [-h]]"
 }
 
 test()
 {   
     cd ../
-    if [[ "$crc" == "true" && "$data_size" -eq 256 ]]
+    if [[ "$crc16" == "true" && "$data_size" -eq 256 ]]
     then
-        sed -i -e 's|program|program_withcrc_payload_256|' ./router3.startup
+        sed -i -e 's|program|program_withcrc16_payload_256|' ./router3.startup
         perl -e 'print "A"x256' > ./client1/root/payload.txt
     fi
-    if [[ "$crc" == "true" && "$data_size" -eq 512 ]]
+    if [[ "$crc16" == "true" && "$data_size" -eq 512 ]]
     then
-        sed -i -e 's|program|program_withcrc_payload_512|' ./router3.startup
+        sed -i -e 's|program|program_withcrc16_payload_512|' ./router3.startup
         perl -e 'print "A"x512' > ./client1/root/payload.txt
     fi
-    if [[ "$crc" == "true" && "$data_size" -eq 1024 ]]
+    if [[ "$crc16" == "true" && "$data_size" -eq 1024 ]]
     then
-        sed -i -e 's|program|program_withcrc_payload_1024|' ./router3.startup
+        sed -i -e 's|program|program_withcrc16_payload_1024|' ./router3.startup
+        perl -e 'print "A"x1024' > ./client1/root/payload.txt
+    fi
+
+    if [[ "$crc32" == "true" && "$data_size" -eq 256 ]]
+    then
+        sed -i -e 's|program|program_withcrc32_payload_256|' ./router3.startup
+        perl -e 'print "A"x256' > ./client1/root/payload.txt
+    fi
+    if [[ "$crc32" == "true" && "$data_size" -eq 512 ]]
+    then
+        sed -i -e 's|program|program_withcrc32_payload_512|' ./router3.startup
+        perl -e 'print "A"x512' > ./client1/root/payload.txt
+    fi
+    if [[ "$crc32" == "true" && "$data_size" -eq 1024 ]]
+    then
+        sed -i -e 's|program|program_withcrc32_payload_1024|' ./router3.startup
         perl -e 'print "A"x1024' > ./client1/root/payload.txt
     fi
 
@@ -38,9 +54,13 @@ test()
 
     echo ""
     echo "Testing lab with packet of size of ${data_size} bytes and interval of ${interval} microseconds."
-    if [[ "$crc" == "true" ]]
+    if [[ "$crc16" == "true" ]]
     then
-        echo "CRC enabled."
+        echo "CRC16 enabled."
+        kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
+    elif [[ "$crc32" == "true" ]]
+    then
+        echo "CRC32 enabled."
         kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
     else
         kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval}" --no-stdout --no-stderr &
@@ -56,9 +76,12 @@ test()
     echo "Saving results."
     kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-    if [[ "$crc" == "true" ]]
+    if [[ "$crc16" == "true" ]]
     then
-        mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_crc.txt
+        mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_crc16.txt
+    elif [[ "$crc32" == "true" ]]
+    then
+        mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_crc32.txt
     else
         mv ./shared/results.txt ./test/results_d${data_size}_i${interval}.txt
     fi
@@ -68,17 +91,46 @@ test()
     kathara lclean
     #/usr/bin/time -o ./test/time_clean.txt -p kathara lclean
 
-    if [[ "$crc" == "true" && "$data_size" -eq 256 ]]
+    if [[ "$crc16" == "true" && "$data_size" -eq 256 ]]
     then
-        sed -i -e 's|program_withcrc_payload_256|program|' ./router3.startup
+        sed -i -e 's|program_withcrc16_payload_256|program|' ./router3.startup
     fi
-    if [[ "$crc" == "true" && "$data_size" -eq 512 ]]
+    if [[ "$crc16" == "true" && "$data_size" -eq 512 ]]
     then
-        sed -i -e 's|program_withcrc_payload_512|program|' ./router3.startup
+        sed -i -e 's|program_withcrc16_payload_512|program|' ./router3.startup
     fi
-    if [[ "$crc" == "true" && "$data_size" -eq 1024 ]]
+    if [[ "$crc16" == "true" && "$data_size" -eq 1024 ]]
     then
-        sed -i -e 's|program_withcrc_payload_1024|program|' ./router3.startup
+        sed -i -e 's|program_withcrc16_payload_1024|program|' ./router3.startup
+    fi
+
+    if [[ "$crc32" == "true" && "$data_size" -eq 256 ]]
+    then
+        sed -i -e 's|program_withcrc32_payload_256|program|' ./router3.startup
+    fi
+    if [[ "$crc32" == "true" && "$data_size" -eq 512 ]]
+    then
+        sed -i -e 's|program_withcrc32_payload_512|program|' ./router3.startup
+    fi
+    if [[ "$crc32" == "true" && "$data_size" -eq 1024 ]]
+    then
+        sed -i -e 's|program_withcrc32_payload_1024|program|' ./router3.startup
+    fi
+
+    echo ""
+    cd ./test
+
+    if [[ "$crc32" == "true" ]]
+    then
+        mkdir -p ./results_crc32
+        mv ./results_d${data_size}_i${interval}_crc32.txt ./results_crc32/results_d${data_size}_i${interval}.txt
+    elif [[ "$crc16" == "true" && "$data_size" -eq 512 ]]
+        mkdir -p ./results_crc16
+        mv ./results_d${data_size}_i${interval}_crc16.txt ./results_crc16/results_d${data_size}_i${interval}.txt
+    then
+    else 
+        mkdir -p ./results_no_crc
+        mv ./results_d${data_size}_i${interval}.txt ./results_no_crc/results_d${data_size}_i${interval}.txt
     fi
 
     echo ""
@@ -88,7 +140,8 @@ test()
 
 data_size=""
 interval=""
-crc=""
+crc16=""
+crc32=""
 
 while [ "$1" != "" ]; do
     case $1 in
@@ -106,8 +159,11 @@ while [ "$1" != "" ]; do
                 interval=$1
             fi
         ;;
-        --crc )       
-            crc="true"
+        --crc16 )       
+            crc16="true"
+        ;;
+        --crc32 )       
+            crc32="true"
         ;;
         -h | --help )           
             usage

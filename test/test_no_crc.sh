@@ -27,3 +27,5 @@
 ./test_network.sh -d 256 -i 10000
 ./test_network.sh -d 512 -i 10000
 ./test_network.sh -d 1024 -i 10000
+
+./parse_results.py results_no_crc  

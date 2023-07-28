@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 
-import os, re
+import os, re, sys
 from statistics import stdev, variance         
 
 def extract_results():
     results = {}
 
-    directory = './'
+    if len(sys.argv) == 2:
+        directory = './' + sys.argv[1] + '/'
+    else:
+        directory = './'
 
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
@@ -36,22 +39,36 @@ def extract_results():
 
 
 def write_results_on_file(results):
-    with open("results_packet_processing_time.csv", "w") as packet_processing_time_file:
+    crc=''
+    if "crc16" in str(results.keys()):
+        crc='_crc16'
+    elif "crc32" in str(results.keys()):
+        crc='_crc32'
+
+    if len(sys.argv) == 2:
+        directory = './' + sys.argv[1] + '/'
+    else:
+        directory = './'
+
+    with open(directory + "results_packet_processing_time" + crc + ".csv", "w") as packet_processing_time_file:
         packet_processing_time_file.write("d,i,avg,min,max,std,variance\n")
 
-    with open("results_packet_dequeuing_timedelta.csv", "w") as packet_dequeuing_timedelta_file:
+    with open(directory + "results_packet_dequeuing_timedelta" + crc + ".csv", "w") as packet_dequeuing_timedelta_file:
         packet_dequeuing_timedelta_file.write("d,i,avg,min,max,std,variance\n")
 
     for filename in sorted(results.keys()):
         d=filename.split('results_d')[1].split('_')[0]
         i=filename.split('results_d'+d+'_i')[1].split('.txt')[0]
-        with open("results_packet_processing_time.csv", "a") as packet_processing_time_file:
+        if crc != '':
+            i=i.split('_'+crc)[0]
+
+        with open(directory + "results_packet_processing_time" + crc + ".csv", "a") as packet_processing_time_file:
             packet_processing_time_file.write("%s,%s,%s,%s,%s,%s,%s\n" % (d, i, results[filename]["packet_processing_time_array_avg"],
                                                                             results[filename]["packet_processing_time_array_min"],
                                                                             results[filename]["packet_processing_time_array_max"],
                                                                             results[filename]["packet_processing_time_array_std"],
                                                                             results[filename]["packet_processing_time_array_variance"]))
-        with open("results_packet_dequeuing_timedelta.csv", "a") as packet_dequeuing_timedelta_file:
+        with open(directory + "results_packet_dequeuing_timedelta" + crc +".csv", "a") as packet_dequeuing_timedelta_file:
             packet_dequeuing_timedelta_file.write("%s,%s,%s,%s,%s,%s,%s\n" % (d, i, results[filename]["packet_dequeuing_timedelta_array_avg"],
                                                                             results[filename]["packet_dequeuing_timedelta_array_min"],
                                                                             results[filename]["packet_dequeuing_timedelta_array_max"],
