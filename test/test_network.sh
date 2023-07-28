@@ -125,9 +125,9 @@ test()
         mkdir -p ./results_crc32
         mv ./results_d${data_size}_i${interval}_crc32.txt ./results_crc32/results_d${data_size}_i${interval}.txt
     elif [[ "$crc16" == "true" && "$data_size" -eq 512 ]]
+    then
         mkdir -p ./results_crc16
         mv ./results_d${data_size}_i${interval}_crc16.txt ./results_crc16/results_d${data_size}_i${interval}.txt
-    then
     else 
         mkdir -p ./results_no_crc
         mv ./results_d${data_size}_i${interval}.txt ./results_no_crc/results_d${data_size}_i${interval}.txt
