@@ -2,7 +2,7 @@
 #include <core.p4>
 #include <v1model.p4>
 
-#define COLLECTION_TIMEDELTA 500000
+#define COLLECTION_TIMEDELTA 55000
 #define PAYLOAD_CHUNK_SIZE 2048
 
 const bit<16> TYPE_IPV4 = 0x0800;
@@ -297,11 +297,11 @@ control MyIngress(inout headers hdr,
 control MyEgress(inout headers hdr,
                  inout metadata meta,
                  inout standard_metadata_t standard_metadata) {
-    register<bit<48>>(100) packet_processing_time_array; //egress timestamp - ingress timestamp
-    register<bit<32>>(100) packet_enqueuing_time_array; //enq_timestamp
-    register<bit<19>>(100) packet_enqueuing_depth_array; //enq_qdepth
-    register<bit<32>>(100) packet_dequeuing_timedelta_array; //deq_timedelta
-    register<bit<19>>(100) packet_dequeuing_depth_array; //deq_qdepth
+    register<bit<48>>(1000) packet_processing_time_array; //egress timestamp - ingress timestamp
+    register<bit<32>>(1000) packet_enqueuing_time_array; //enq_timestamp
+    register<bit<19>>(1000) packet_enqueuing_depth_array; //enq_qdepth
+    register<bit<32>>(1000) packet_dequeuing_timedelta_array; //deq_timedelta
+    register<bit<19>>(1000) packet_dequeuing_depth_array; //deq_qdepth
     
     register<bit<48>>(1) timestamp_last_seen_packet;
     register<bit<32>>(1) last_saved_index;
