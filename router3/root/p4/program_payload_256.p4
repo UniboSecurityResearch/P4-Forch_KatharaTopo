@@ -337,7 +337,7 @@ control MyEgress(inout headers hdr,
 
             //update index
             last_saved_index.write(0,     current_index + 1);
-            if(current_index + 1 > 99){
+            if(current_index + 1 > 999){
                 last_saved_index.write(0,     0);
             }
             
