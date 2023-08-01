@@ -108,14 +108,14 @@ test()
         sed -i -e 's|program_payload_1024|program|' ./router3.startup
     fi
 
-    if [[ "$crc16" == "true" && "$data_size" -eq 256 ]]
+    if [[ "$crc16" == "true" ]]
     then
         sed -i -e 's|program_withcrc16_payload_256|program|' ./router3.startup
         sed -i -e 's|program_withcrc16_payload_512|program|' ./router3.startup
         sed -i -e 's|program_withcrc16_payload_1024|program|' ./router3.startup
     fi
 
-    if [[ "$crc32" == "true" && "$data_size" -eq 256 ]]
+    if [[ "$crc32" == "true" ]]
     then
         sed -i -e 's|program_withcrc32_payload_256|program|' ./router3.startup
         sed -i -e 's|program_withcrc32_payload_512|program|' ./router3.startup
