@@ -2,7 +2,7 @@
 #include <core.p4>
 #include <v1model.p4>
 
-#define COLLECTION_TIMEDELTA 500000
+#define COLLECTION_TIMEDELTA 55000
 #define STARTING_PAYLOAD_CHUNK_SIZE 2032
 #define PAYLOAD_CHUNK_SIZE 2048
 #define HASH_BASE 32w0
@@ -438,11 +438,11 @@ control MyIngress(inout headers hdr,
 control MyEgress(inout headers hdr,
                  inout metadata meta,
                  inout standard_metadata_t standard_metadata) {
-    register<bit<48>>(100) packet_processing_time_array; //egress timestamp - ingress timestamp
-    register<bit<32>>(100) packet_enqueuing_time_array; //enq_timestamp
-    register<bit<19>>(100) packet_enqueuing_depth_array; //enq_qdepth
-    register<bit<32>>(100) packet_dequeuing_timedelta_array; //deq_timedelta
-    register<bit<19>>(100) packet_dequeuing_depth_array; //deq_qdepth
+    register<bit<48>>(1000) packet_processing_time_array; //egress timestamp - ingress timestamp
+    register<bit<32>>(1000) packet_enqueuing_time_array; //enq_timestamp
+    register<bit<19>>(1000) packet_enqueuing_depth_array; //enq_qdepth
+    register<bit<32>>(1000) packet_dequeuing_timedelta_array; //deq_timedelta
+    register<bit<19>>(1000) packet_dequeuing_depth_array; //deq_qdepth
     
     register<bit<48>>(1) timestamp_last_seen_packet;
     register<bit<32>>(1) last_saved_index;
@@ -481,7 +481,7 @@ control MyEgress(inout headers hdr,
 
             //update index
             last_saved_index.write(0,     current_index + 1);
-            if(current_index + 1 > 99){
+            if(current_index + 1 > 999){
                 last_saved_index.write(0,     0);
             }
             
