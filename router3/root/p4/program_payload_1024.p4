@@ -271,9 +271,11 @@ control MyIngress(inout headers hdr,
     }
 
     apply {
+        /*
         if (hdr.tcp.isValid()) {
             payload_data.write(0, hdr.payload.payload);
         }
+        */
         if (hdr.ipv4.isValid()) {
             ipv4_exact.apply();
         } 
