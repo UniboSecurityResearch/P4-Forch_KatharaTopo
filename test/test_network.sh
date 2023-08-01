@@ -14,14 +14,17 @@ test()
     if [[ "$data_size" -eq 256 ]]
     then
         perl -e 'print "A"x256' > ./client1/root/payload.txt
+        sed -i -e 's|program|program_payload_256|' ./router3.startup
     fi
     if [[ "$data_size" -eq 512 ]]
     then
         perl -e 'print "A"x512' > ./client1/root/payload.txt
+        sed -i -e 's|program|program_payload_512|' ./router3.startup
     fi
     if [[ "$data_size" -eq 1024 ]]
     then
         perl -e 'print "A"x1024' > ./client1/root/payload.txt
+        sed -i -e 's|program|program_payload_1024|' ./router3.startup
     fi
 
     if [[ "$crc16" == "true" && "$data_size" -eq 256 ]]
@@ -98,29 +101,24 @@ test()
     kathara lclean
     #/usr/bin/time -o ./test/time_clean.txt -p kathara lclean
 
+    if [[ "$crc16" == "" && "$crc32" == "" ]]
+    then
+        sed -i -e 's|program_payload_256|program|' ./router3.startup
+        sed -i -e 's|program_payload_512|program|' ./router3.startup
+        sed -i -e 's|program_payload_1024|program|' ./router3.startup
+    fi
+
     if [[ "$crc16" == "true" && "$data_size" -eq 256 ]]
     then
         sed -i -e 's|program_withcrc16_payload_256|program|' ./router3.startup
-    fi
-    if [[ "$crc16" == "true" && "$data_size" -eq 512 ]]
-    then
         sed -i -e 's|program_withcrc16_payload_512|program|' ./router3.startup
-    fi
-    if [[ "$crc16" == "true" && "$data_size" -eq 1024 ]]
-    then
         sed -i -e 's|program_withcrc16_payload_1024|program|' ./router3.startup
     fi
 
     if [[ "$crc32" == "true" && "$data_size" -eq 256 ]]
     then
         sed -i -e 's|program_withcrc32_payload_256|program|' ./router3.startup
-    fi
-    if [[ "$crc32" == "true" && "$data_size" -eq 512 ]]
-    then
         sed -i -e 's|program_withcrc32_payload_512|program|' ./router3.startup
-    fi
-    if [[ "$crc32" == "true" && "$data_size" -eq 1024 ]]
-    then
         sed -i -e 's|program_withcrc32_payload_1024|program|' ./router3.startup
     fi
 
