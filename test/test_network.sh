@@ -29,28 +29,28 @@ test()
 
     if [[ "$crc16" == "true" && "$data_size" -eq 256 ]]
     then
-        sed -i -e 's|program|program_withcrc16_payload_256|' ./router3.startup
+        sed -i -e 's|program_payload_256|program_withcrc16_payload_256|' ./router3.startup
     fi
     if [[ "$crc16" == "true" && "$data_size" -eq 512 ]]
     then
-        sed -i -e 's|program|program_withcrc16_payload_512|' ./router3.startup
+        sed -i -e 's|program_payload_512|program_withcrc16_payload_512|' ./router3.startup
     fi
     if [[ "$crc16" == "true" && "$data_size" -eq 1024 ]]
     then
-        sed -i -e 's|program|program_withcrc16_payload_1024|' ./router3.startup
+        sed -i -e 's|program_payload_1024|program_withcrc16_payload_1024|' ./router3.startup
     fi
 
     if [[ "$crc32" == "true" && "$data_size" -eq 256 ]]
     then
-        sed -i -e 's|program|program_withcrc32_payload_256|' ./router3.startup
+        sed -i -e 's|program_payload_256|program_withcrc32_payload_256|' ./router3.startup
     fi
     if [[ "$crc32" == "true" && "$data_size" -eq 512 ]]
     then
-        sed -i -e 's|program|program_withcrc32_payload_512|' ./router3.startup
+        sed -i -e 's|program_payload_512|program_withcrc32_payload_512|' ./router3.startup
     fi
     if [[ "$crc32" == "true" && "$data_size" -eq 1024 ]]
     then
-        sed -i -e 's|program|program_withcrc32_payload_1024|' ./router3.startup
+        sed -i -e 's|program_payload_1024|program_withcrc32_payload_1024|' ./router3.startup
     fi
 
     
