@@ -11,36 +11,43 @@ usage()
 test()
 {   
     cd ../
+    if [[ "$data_size" -eq 256 ]]
+    then
+        perl -e 'print "A"x256' > ./client1/root/payload.txt
+    fi
+    if [[ "$data_size" -eq 512 ]]
+    then
+        perl -e 'print "A"x512' > ./client1/root/payload.txt
+    fi
+    if [[ "$data_size" -eq 1024 ]]
+    then
+        perl -e 'print "A"x1024' > ./client1/root/payload.txt
+    fi
+
     if [[ "$crc16" == "true" && "$data_size" -eq 256 ]]
     then
         sed -i -e 's|program|program_withcrc16_payload_256|' ./router3.startup
-        perl -e 'print "A"x256' > ./client1/root/payload.txt
     fi
     if [[ "$crc16" == "true" && "$data_size" -eq 512 ]]
     then
         sed -i -e 's|program|program_withcrc16_payload_512|' ./router3.startup
-        perl -e 'print "A"x512' > ./client1/root/payload.txt
     fi
     if [[ "$crc16" == "true" && "$data_size" -eq 1024 ]]
     then
         sed -i -e 's|program|program_withcrc16_payload_1024|' ./router3.startup
-        perl -e 'print "A"x1024' > ./client1/root/payload.txt
     fi
 
     if [[ "$crc32" == "true" && "$data_size" -eq 256 ]]
     then
         sed -i -e 's|program|program_withcrc32_payload_256|' ./router3.startup
-        perl -e 'print "A"x256' > ./client1/root/payload.txt
     fi
     if [[ "$crc32" == "true" && "$data_size" -eq 512 ]]
     then
         sed -i -e 's|program|program_withcrc32_payload_512|' ./router3.startup
-        perl -e 'print "A"x512' > ./client1/root/payload.txt
     fi
     if [[ "$crc32" == "true" && "$data_size" -eq 1024 ]]
     then
         sed -i -e 's|program|program_withcrc32_payload_1024|' ./router3.startup
-        perl -e 'print "A"x1024' > ./client1/root/payload.txt
     fi
 
     
@@ -63,7 +70,7 @@ test()
         echo "CRC32 enabled."
         kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
     else
-        kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval}" --no-stdout --no-stderr &
+        kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
     fi
     
     for i in {1..60}; do
