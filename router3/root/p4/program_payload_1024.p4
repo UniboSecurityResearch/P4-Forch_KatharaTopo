@@ -3,6 +3,7 @@
 #include <v1model.p4>
 
 #define COLLECTION_TIMEDELTA 500000
+#define PAYLOAD_CHUNK_SIZE 2048
 
 const bit<16> TYPE_IPV4 = 0x0800;
 const bit<16> TYPE_ARP  = 0x0806;
@@ -93,7 +94,10 @@ header icmp_t {
 }
 
 header payload_t{
-    bit<2048> payload;
+    bit<PAYLOAD_CHUNK_SIZE> payload;
+    bit<PAYLOAD_CHUNK_SIZE> payload2;
+    bit<PAYLOAD_CHUNK_SIZE> payload3;
+    bit<PAYLOAD_CHUNK_SIZE> payload4;
 }
 
 struct metadata {
@@ -154,19 +158,19 @@ parser MyParser(packet_in packet,
 
     state tcp {
        packet.extract(hdr.tcp);
-       transition accept;
+       transition parse_tcp_payload;
     }
 
     state parse_udp {
        packet.extract(hdr.udp);
        transition accept;
     }
-/*
     state parse_tcp_payload {
         packet.extract(hdr.payload);
+        //Tcp_option_parser.apply(packet, hdr.tcp.dataOffset,
+        //            hdr.tcp_options_vec, hdr.tcp_options_padding);
         transition accept;
     }
-*/
 }
 
 
@@ -384,7 +388,7 @@ control MyDeparser(packet_out packet, in headers hdr) {
         packet.emit(hdr.icmp);
         packet.emit(hdr.udp);
         packet.emit(hdr.tcp);
-        //packet.emit(hdr.payload);
+        packet.emit(hdr.payload);
     }
 }
 
