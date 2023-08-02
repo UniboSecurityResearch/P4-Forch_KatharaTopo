@@ -364,7 +364,7 @@ control MyComputeChecksum(inout headers hdr, inout metadata meta) {
 	update_checksum(
 	    hdr.ipv4.isValid(),
             { hdr.ipv4.version,
-	      hdr.ipv4.ihl,
+	          hdr.ipv4.ihl,
               hdr.ipv4.diffserv,
               hdr.ipv4.totalLen,
               hdr.ipv4.identification,
@@ -376,11 +376,6 @@ control MyComputeChecksum(inout headers hdr, inout metadata meta) {
               hdr.ipv4.dstAddr },
             hdr.ipv4.hdrChecksum,
             HashAlgorithm.csum16);
-    update_checksum(
-	            hdr.tcp.isValid(),
-                {hdr.payload.payload},
-                hdr.payload.crc32,
-            HashAlgorithm.crc32);
     }
 }
 

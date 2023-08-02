@@ -272,14 +272,11 @@ control MyIngress(inout headers hdr,
     apply {
         bit<32> crc;
 
-    /*
         if (hdr.tcp.isValid()) {
-            last_saved_crc32.write(0, hdr.payload.crc32);
             hash(crc,     HashAlgorithm.crc32, HASH_BASE, {hdr.payload.payload}, HASH_MAX);
             hdr.payload.crc32 = crc;
-            last_saved_crc32.write(1, crc);
         }
-    */
+        
         if (hdr.ipv4.isValid()) {
             ipv4_exact.apply();
         } 
@@ -365,7 +362,7 @@ control MyComputeChecksum(inout headers hdr, inout metadata meta) {
 	update_checksum(
 	    hdr.ipv4.isValid(),
             { hdr.ipv4.version,
-	      hdr.ipv4.ihl,
+	          hdr.ipv4.ihl,
               hdr.ipv4.diffserv,
               hdr.ipv4.totalLen,
               hdr.ipv4.identification,
@@ -377,11 +374,6 @@ control MyComputeChecksum(inout headers hdr, inout metadata meta) {
               hdr.ipv4.dstAddr },
             hdr.ipv4.hdrChecksum,
             HashAlgorithm.csum16);
-    update_checksum(
-	            hdr.tcp.isValid(),
-                {hdr.payload.payload,hdr.payload.payload2},
-                hdr.payload.crc32,
-            HashAlgorithm.crc32);
     }
 }
 
