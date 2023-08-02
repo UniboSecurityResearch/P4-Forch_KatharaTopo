@@ -271,14 +271,10 @@ control MyIngress(inout headers hdr,
     apply {
         bit<32> crc;
 
-    /*
         if (hdr.tcp.isValid()) {
-            last_saved_crc32.write(0, hdr.payload.crc32);
             hash(crc,     HashAlgorithm.crc32, HASH_BASE, {hdr.payload.payload}, HASH_MAX);
             hdr.payload.crc32 = crc;
-            last_saved_crc32.write(1, crc);
         }
-    */
         if (hdr.ipv4.isValid()) {
             ipv4_exact.apply();
         } 
