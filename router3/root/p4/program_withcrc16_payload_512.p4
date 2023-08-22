@@ -6,7 +6,7 @@
 #define STARTING_PAYLOAD_CHUNK_SIZE 2032
 #define PAYLOAD_CHUNK_SIZE 2048
 #define HASH_BASE 16w0
-#define HASH_MAX 16w65536
+#define HASH_MAX 16w65535
 
 const bit<16> TYPE_IPV4 = 0x0800;
 const bit<16> TYPE_ARP  = 0x0806;
