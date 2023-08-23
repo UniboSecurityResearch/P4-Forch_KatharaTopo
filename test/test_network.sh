@@ -5,7 +5,7 @@ set -e
 
 usage()
 {
-    echo "usage: ./test_network.sh [[-d data_size -i interval] [--crc16] [--crc32]| [-h]]"
+    echo "usage: ./test_network.sh [[-d data_size -i interval] [--crc16] [--crc32] [--xxh64]| [-h]]"
 }
 
 test()
@@ -53,6 +53,21 @@ test()
         sed -i -e 's|program_payload_1024|program_withcrc32_payload_1024|' ./router3.startup
     fi
 
+    if [[ "$xxh64" == "true" && "$data_size" -eq 256 ]]
+    then
+        sed -i -e 's|p4c /root/p4/program_payload_256.p4 -o /root/p4/|#p4c /root/p4/program.p4 -o /root/p4/|' ./router3.startup
+        sed -i -e 's|/root/p4/program_payload_256.json|/root/p4/program_withxxhash64_payload_256.json|' ./router3.startup
+    fi
+    if [[ "$xxh64" == "true" && "$data_size" -eq 512 ]]
+    then
+        sed -i -e 's|p4c /root/p4/program_payload_512.p4 -o /root/p4/|#p4c /root/p4/program.p4 -o /root/p4/|' ./router3.startup
+        sed -i -e 's|/root/p4/program_payload_512.json|/root/p4/program_withxxhash64_payload_512.json|' ./router3.startup
+    fi
+    if [[ "$xxh64" == "true" && "$data_size" -eq 1024 ]]
+    then
+        sed -i -e 's|p4c /root/p4/program_payload_1024.p4 -o /root/p4/|#p4c /root/p4/program.p4 -o /root/p4/|' ./router3.startup
+        sed -i -e 's|/root/p4/program_payload_1024.json|/root/p4/program_withxxhash64_payload_1024.json|' ./router3.startup
+    fi
     
     echo ""
     echo "Starting kathara lab..."
@@ -71,6 +86,10 @@ test()
     elif [[ "$crc32" == "true" ]]
     then
         echo "CRC32 enabled."
+        kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
+    elif [[ "$xxh64" == "true" ]]
+    then
+        echo "XXH64 enabled."
         kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
     else
         kathara exec client1 "hping3 -d ${data_size} 192.168.1.1 -i u${interval} --file /root/payload.txt" --no-stdout --no-stderr &
@@ -92,6 +111,9 @@ test()
     elif [[ "$crc32" == "true" ]]
     then
         mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_crc32.txt
+    elif [[ "$xxh64" == "true" ]]
+    then
+        mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_xxh64.txt
     else
         mv ./shared/results.txt ./test/results_d${data_size}_i${interval}.txt
     fi
@@ -101,7 +123,7 @@ test()
     kathara lclean
     #/usr/bin/time -o ./test/time_clean.txt -p kathara lclean
 
-    if [[ "$crc16" == "" && "$crc32" == "" ]]
+    if [[ "$crc16" == "" && "$crc32" == "" && "$xxh64" == "" ]]
     then
         sed -i -e 's|program_payload_256|program|' ./router3.startup
         sed -i -e 's|program_payload_512|program|' ./router3.startup
@@ -122,6 +144,14 @@ test()
         sed -i -e 's|program_withcrc32_payload_1024|program|' ./router3.startup
     fi
 
+    if [[ "$xxh64" == "true" ]]
+    then
+        sed -i -e 's|#p4c /root/p4/program.p4 -o /root/p4/|p4c /root/p4/program.p4 -o /root/p4/|' ./router3.startup
+        sed -i -e 's|program_withxxhash64_payload_256|program|' ./router3.startup
+        sed -i -e 's|program_withxxhash64_payload_512|program|' ./router3.startup
+        sed -i -e 's|program_withxxhash64_payload_1024|program|' ./router3.startup
+    fi
+
     cd ./test
 
     if [[ "$crc32" == "true" ]]
@@ -132,6 +162,10 @@ test()
     then
         mkdir -p ./results_crc16
         mv ./results_d${data_size}_i${interval}_crc16.txt ./results_crc16/results_d${data_size}_i${interval}.txt
+    elif [[ "$xxh64" == "true" ]]
+    then
+        mkdir -p ./results_xxh64
+        mv ./results_d${data_size}_i${interval}_xxh64.txt ./results_xxh64/results_d${data_size}_i${interval}.txt
     else 
         mkdir -p ./results_no_crc
         mv ./results_d${data_size}_i${interval}.txt ./results_no_crc/results_d${data_size}_i${interval}.txt
@@ -146,6 +180,7 @@ data_size=""
 interval=""
 crc16=""
 crc32=""
+xxh64=""
 
 while [ "$1" != "" ]; do
     case $1 in
@@ -168,6 +203,9 @@ while [ "$1" != "" ]; do
         ;;
         --crc32 )       
             crc32="true"
+        ;;
+        --xxh64 )       
+            xxh64="true"
         ;;
         -h | --help )           
             usage
