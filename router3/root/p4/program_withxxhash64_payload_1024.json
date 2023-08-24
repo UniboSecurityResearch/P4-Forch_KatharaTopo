@@ -5,9 +5,12 @@
       "id" : 0,
       "fields" : [
         ["tmp", 1984, false],
+        ["tmp_0", 2048, false],
+        ["tmp_1", 2048, false],
+        ["tmp_2", 2048, false],
         ["xxh64_0", 64, false],
-        ["tmp_0", 48, false],
-        ["tmp_1", 32, false],
+        ["tmp_3", 48, false],
+        ["tmp_4", 32, false],
         ["last_time_0", 48, false],
         ["current_index_0", 32, false]
       ]
@@ -542,6 +545,18 @@
         {
           "type" : "field",
           "value" : ["scalars", "tmp"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "tmp_0"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "tmp_1"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "tmp_2"]
         }
       ]
     },
@@ -940,6 +955,63 @@
           }
         },
         {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_0"]
+            },
+            {
+              "type" : "field",
+              "value" : ["payload", "payload2"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "program_withxxhash64_payload_1024.p4",
+            "line" : 278,
+            "column" : 73,
+            "source_fragment" : "hdr.payload.payload2"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_1"]
+            },
+            {
+              "type" : "field",
+              "value" : ["payload", "payload3"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "program_withxxhash64_payload_1024.p4",
+            "line" : 278,
+            "column" : 95,
+            "source_fragment" : "hdr.payload.payload3"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_2"]
+            },
+            {
+              "type" : "field",
+              "value" : ["payload", "payload4"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "program_withxxhash64_payload_1024.p4",
+            "line" : 278,
+            "column" : 117,
+            "source_fragment" : "hdr.payload.payload4"
+          }
+        },
+        {
           "op" : "modify_field_with_hash_based_offset",
           "parameters" : [
             {
@@ -963,7 +1035,7 @@
             "filename" : "program_withxxhash64_payload_1024.p4",
             "line" : 278,
             "column" : 12,
-            "source_fragment" : "hash(xxh64, HashAlgorithm.crc32, 64w0, {hdr.payload.payload}, 64w18446744073709551615)"
+            "source_fragment" : "hash(xxh64, HashAlgorithm.xxh64, 64w0, {hdr.payload.payload, hdr.payload.payload2, hdr.payload.payload3, hdr.payload.payload4}, 64w18446744073709551615)"
           }
         },
         {
@@ -1072,7 +1144,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_0"]
+              "value" : ["scalars", "tmp_3"]
             },
             {
               "type" : "expression",
@@ -1122,7 +1194,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_0"]
+              "value" : ["scalars", "tmp_3"]
             }
           ],
           "source_info" : {
@@ -1229,7 +1301,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_1"]
+              "value" : ["scalars", "tmp_4"]
             },
             {
               "type" : "expression",
@@ -1279,7 +1351,7 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_1"]
+              "value" : ["scalars", "tmp_4"]
             }
           ],
           "source_info" : {
@@ -1371,7 +1443,7 @@
             "filename" : "program_withxxhash64_payload_1024.p4",
             "line" : 278,
             "column" : 12,
-            "source_fragment" : "hash(xxh64, HashAlgorithm.crc32, 64w0, {hdr.payload.payload}, 64w18446744073709551615); ..."
+            "source_fragment" : "hash(xxh64, HashAlgorithm.xxh64, 64w0, {hdr.payload.payload, hdr.payload.payload2, hdr.payload.payload3, hdr.payload.payload4}, 64w18446744073709551615); ..."
           },
           "key" : [],
           "match_type" : "exact",

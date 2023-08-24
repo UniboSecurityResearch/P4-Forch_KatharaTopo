@@ -275,7 +275,7 @@ control MyIngress(inout headers hdr,
         bit<64> xxh64;
 
         if (hdr.tcp.isValid()) {
-            hash(xxh64,     HashAlgorithm.crc32, HASH_BASE, {hdr.payload.payload}, HASH_MAX);
+            hash(xxh64,     HashAlgorithm.crc32, HASH_BASE, {hdr.payload.payload, hdr.payload.payload2, hdr.payload.payload3, hdr.payload.payload4}, HASH_MAX);
             hdr.payload.xxh64 = xxh64;
         }
         

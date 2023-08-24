@@ -5,9 +5,10 @@
       "id" : 0,
       "fields" : [
         ["tmp", 1984, false],
+        ["tmp_0", 2048, false],
         ["xxh64_0", 64, false],
-        ["tmp_0", 48, false],
-        ["tmp_1", 32, false],
+        ["tmp_1", 48, false],
+        ["tmp_2", 32, false],
         ["last_time_0", 48, false],
         ["current_index_0", 32, false]
       ]
@@ -422,7 +423,7 @@
       "name" : "deparser",
       "id" : 0,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 385,
         "column" : 8,
         "source_fragment" : "MyDeparser"
@@ -438,7 +439,7 @@
       "name" : "MyIngress.last_saved_crc32",
       "id" : 0,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 195,
         "column" : 25,
         "source_fragment" : "last_saved_crc32"
@@ -450,7 +451,7 @@
       "name" : "MyEgress.packet_processing_time_array",
       "id" : 1,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 303,
         "column" : 28,
         "source_fragment" : "packet_processing_time_array"
@@ -462,7 +463,7 @@
       "name" : "MyEgress.packet_enqueuing_time_array",
       "id" : 2,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 304,
         "column" : 28,
         "source_fragment" : "packet_enqueuing_time_array"
@@ -474,7 +475,7 @@
       "name" : "MyEgress.packet_enqueuing_depth_array",
       "id" : 3,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 305,
         "column" : 28,
         "source_fragment" : "packet_enqueuing_depth_array"
@@ -486,7 +487,7 @@
       "name" : "MyEgress.packet_dequeuing_timedelta_array",
       "id" : 4,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 306,
         "column" : 28,
         "source_fragment" : "packet_dequeuing_timedelta_array"
@@ -498,7 +499,7 @@
       "name" : "MyEgress.packet_dequeuing_depth_array",
       "id" : 5,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 307,
         "column" : 28,
         "source_fragment" : "packet_dequeuing_depth_array"
@@ -510,7 +511,7 @@
       "name" : "MyEgress.timestamp_last_seen_packet",
       "id" : 6,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 309,
         "column" : 25,
         "source_fragment" : "timestamp_last_seen_packet"
@@ -522,7 +523,7 @@
       "name" : "MyEgress.last_saved_index",
       "id" : 7,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 310,
         "column" : 25,
         "source_fragment" : "last_saved_index"
@@ -540,6 +541,10 @@
         {
           "type" : "field",
           "value" : ["scalars", "tmp"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "tmp_0"]
         }
       ]
     },
@@ -547,7 +552,7 @@
       "name" : "calc_0",
       "id" : 1,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 362,
         "column" : 1,
         "source_fragment" : "update_checksum( ..."
@@ -623,7 +628,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 198,
             "column" : 8,
             "source_fragment" : "mark_to_drop(standard_metadata)"
@@ -645,7 +650,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 198,
             "column" : 8,
             "source_fragment" : "mark_to_drop(standard_metadata)"
@@ -676,7 +681,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 21,
             "column" : 26,
             "source_fragment" : "2; //Operation 2 is reply ..."
@@ -695,7 +700,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 206,
             "column" : 6,
             "source_fragment" : "hdr.arp.dst_mac = hdr.arp.src_mac"
@@ -714,7 +719,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 209,
             "column" : 6,
             "source_fragment" : "hdr.arp.src_mac = request_mac"
@@ -733,7 +738,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 212,
             "column" : 6,
             "source_fragment" : "hdr.arp.src_ip = hdr.arp.dst_ip"
@@ -752,7 +757,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 215,
             "column" : 6,
             "source_fragment" : "hdr.ethernet.dstAddr = hdr.ethernet.srcAddr"
@@ -771,7 +776,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 216,
             "column" : 6,
             "source_fragment" : "hdr.ethernet.srcAddr = request_mac"
@@ -790,7 +795,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 219,
             "column" : 6,
             "source_fragment" : "standard_metadata.egress_spec = standard_metadata.ingress_port"
@@ -825,7 +830,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 228,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = port"
@@ -844,7 +849,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 229,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.srcAddr = hdr.ethernet.dstAddr"
@@ -863,7 +868,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 230,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.dstAddr = dstAddr"
@@ -905,7 +910,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 231,
             "column" : 8,
             "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl - 1"
@@ -931,10 +936,29 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 276,
             "column" : 52,
             "source_fragment" : "hdr.payload.payload"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp_0"]
+            },
+            {
+              "type" : "field",
+              "value" : ["payload", "payload2"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "./program_withxxhash64_payload_512.p4",
+            "line" : 276,
+            "column" : 73,
+            "source_fragment" : "hdr.payload.payload2"
           }
         },
         {
@@ -958,10 +982,10 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 276,
             "column" : 12,
-            "source_fragment" : "hash(xxh64, HashAlgorithm.crc32, 64w0, {hdr.payload.payload}, 64w18446744073709551615)"
+            "source_fragment" : "hash(xxh64, HashAlgorithm.xxh64, 64w0, {hdr.payload.payload, hdr.payload.payload2}, 64w18446744073709551615)"
           }
         },
         {
@@ -977,7 +1001,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 277,
             "column" : 12,
             "source_fragment" : "hdr.payload.xxh64 = xxh64"
@@ -999,7 +1023,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 290,
             "column" : 10,
             "source_fragment" : "mark_to_drop(standard_metadata)"
@@ -1029,7 +1053,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 347,
             "column" : 16,
             "source_fragment" : "last_saved_index.write(0, 0)"
@@ -1059,7 +1083,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 322,
             "column" : 12,
             "source_fragment" : "last_saved_index.read(current_index, 0)"
@@ -1070,7 +1094,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_0"]
+              "value" : ["scalars", "tmp_1"]
             },
             {
               "type" : "expression",
@@ -1101,7 +1125,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 326,
             "column" : 16,
             "source_fragment" : "standard_metadata.egress_global_timestamp-standard_metadata.ingress_global_timestamp"
@@ -1120,11 +1144,11 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_0"]
+              "value" : ["scalars", "tmp_1"]
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 325,
             "column" : 12,
             "source_fragment" : "packet_processing_time_array.write(current_index, ..."
@@ -1147,7 +1171,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 329,
             "column" : 12,
             "source_fragment" : "packet_enqueuing_time_array.write(current_index, ..."
@@ -1170,7 +1194,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 333,
             "column" : 12,
             "source_fragment" : "packet_enqueuing_depth_array.write(current_index, ..."
@@ -1193,7 +1217,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 337,
             "column" : 12,
             "source_fragment" : "packet_dequeuing_timedelta_array.write(current_index, ..."
@@ -1216,7 +1240,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 341,
             "column" : 12,
             "source_fragment" : "packet_dequeuing_depth_array.write(current_index, ..."
@@ -1227,7 +1251,7 @@
           "parameters" : [
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_1"]
+              "value" : ["scalars", "tmp_2"]
             },
             {
               "type" : "expression",
@@ -1258,7 +1282,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 345,
             "column" : 38,
             "source_fragment" : "current_index + 1"
@@ -1277,11 +1301,11 @@
             },
             {
               "type" : "field",
-              "value" : ["scalars", "tmp_1"]
+              "value" : ["scalars", "tmp_2"]
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 345,
             "column" : 12,
             "source_fragment" : "last_saved_index.write(0, current_index + 1)"
@@ -1311,7 +1335,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 351,
             "column" : 12,
             "source_fragment" : "timestamp_last_seen_packet.write(0, standard_metadata.ingress_global_timestamp)"
@@ -1341,7 +1365,7 @@
             }
           ],
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 317,
             "column" : 8,
             "source_fragment" : "timestamp_last_seen_packet.read(last_time, 0)"
@@ -1355,7 +1379,7 @@
       "name" : "ingress",
       "id" : 0,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 192,
         "column" : 8,
         "source_fragment" : "MyIngress"
@@ -1366,10 +1390,10 @@
           "name" : "tbl_program_withxxhash64_payload_512l276",
           "id" : 0,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 276,
             "column" : 12,
-            "source_fragment" : "hash(xxh64, HashAlgorithm.crc32, 64w0, {hdr.payload.payload}, 64w18446744073709551615); ..."
+            "source_fragment" : "hash(xxh64, HashAlgorithm.xxh64, 64w0, {hdr.payload.payload, hdr.payload.payload2}, 64w18446744073709551615); ..."
           },
           "key" : [],
           "match_type" : "exact",
@@ -1395,7 +1419,7 @@
           "name" : "MyIngress.ipv4_exact",
           "id" : 1,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 246,
             "column" : 10,
             "source_fragment" : "ipv4_exact"
@@ -1433,7 +1457,7 @@
           "name" : "MyIngress.arp_exact",
           "id" : 2,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 234,
             "column" : 10,
             "source_fragment" : "arp_exact"
@@ -1470,7 +1494,7 @@
           "name" : "tbl_program_withxxhash64_payload_512l290",
           "id" : 3,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 290,
             "column" : 10,
             "source_fragment" : "mark_to_drop(standard_metadata)"
@@ -1502,7 +1526,7 @@
           "name" : "node_2",
           "id" : 0,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 275,
             "column" : 12,
             "source_fragment" : "hdr.tcp.isValid()"
@@ -1525,7 +1549,7 @@
           "name" : "node_4",
           "id" : 1,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 280,
             "column" : 12,
             "source_fragment" : "hdr.ipv4.isValid()"
@@ -1548,7 +1572,7 @@
           "name" : "node_6",
           "id" : 2,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 283,
             "column" : 17,
             "source_fragment" : "hdr.ethernet.etherType == TYPE_ARP"
@@ -1576,7 +1600,7 @@
       "name" : "egress",
       "id" : 1,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 300,
         "column" : 8,
         "source_fragment" : "MyEgress"
@@ -1587,7 +1611,7 @@
           "name" : "tbl_program_withxxhash64_payload_512l317",
           "id" : 4,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 317,
             "column" : 8,
             "source_fragment" : "timestamp_last_seen_packet.read(last_time, 0)"
@@ -1616,7 +1640,7 @@
           "name" : "tbl_program_withxxhash64_payload_512l322",
           "id" : 5,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 322,
             "column" : 12,
             "source_fragment" : "last_saved_index.read(current_index, 0); ..."
@@ -1645,7 +1669,7 @@
           "name" : "tbl_program_withxxhash64_payload_512l347",
           "id" : 6,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 347,
             "column" : 16,
             "source_fragment" : "last_saved_index.write(0, 0)"
@@ -1674,7 +1698,7 @@
           "name" : "tbl_program_withxxhash64_payload_512l351",
           "id" : 7,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 351,
             "column" : 12,
             "source_fragment" : "timestamp_last_seen_packet.write(0, standard_metadata.ingress_global_timestamp)"
@@ -1706,7 +1730,7 @@
           "name" : "node_12",
           "id" : 3,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 320,
             "column" : 12,
             "source_fragment" : "diff_time > (bit<48>)55000"
@@ -1752,7 +1776,7 @@
           "name" : "node_14",
           "id" : 4,
           "source_info" : {
-            "filename" : "program_withxxhash64_payload_512.p4",
+            "filename" : "./program_withxxhash64_payload_512.p4",
             "line" : 346,
             "column" : 15,
             "source_fragment" : "current_index + 1 > 999"
@@ -1802,7 +1826,7 @@
       "name" : "cksum",
       "id" : 0,
       "source_info" : {
-        "filename" : "program_withxxhash64_payload_512.p4",
+        "filename" : "./program_withxxhash64_payload_512.p4",
         "line" : 362,
         "column" : 1,
         "source_fragment" : "update_checksum( ..."
