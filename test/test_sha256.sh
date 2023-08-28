@@ -17,8 +17,8 @@ ip link set eth4 address 00:00:0a:00:04:ff
 chmod u+x /retrieve_info.sh
 
 #P4_16 commands
-p4c-bm2-ss /root/p4/program_withmd5_payload_256.p4 --emit-externs -o /root/p4/program_withmd5_payload_256.json
-simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 /root/p4/program_withmd5_payload_256.json -- --load-modules=/root/p4/definition.so &
+p4c-bm2-ss /root/p4/program_withsha256_payload_256.p4 --emit-externs -o /root/p4/program_withsha256_payload_256.json
+simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 /root/p4/program_withsha256_payload_256.json -- --load-modules=/root/p4/definition.so &
 
 while [[ $(pgrep simple_switch) -eq 0 ]]; do sleep 1; done
 until simple_switch_CLI <<< "help"; do sleep 1; done
@@ -47,7 +47,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -80,7 +80,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -113,7 +113,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -146,7 +146,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -179,7 +179,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -201,8 +201,8 @@ ip link set eth4 address 00:00:0a:00:04:ff
 chmod u+x /retrieve_info.sh
 
 #P4_16 commands
-p4c-bm2-ss /root/p4/program_withmd5_payload_512.p4 --emit-externs -o /root/p4/program_withmd5_payload_512.json
-simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 /root/p4/program_withmd5_payload_512.json -- --load-modules=/root/p4/definition.so &
+p4c-bm2-ss /root/p4/program_withsha256_payload_512.p4 --emit-externs -o /root/p4/program_withsha256_payload_512.json
+simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 /root/p4/program_withsha256_payload_512.json -- --load-modules=/root/p4/definition.so &
 
 while [[ $(pgrep simple_switch) -eq 0 ]]; do sleep 1; done
 until simple_switch_CLI <<< "help"; do sleep 1; done
@@ -231,7 +231,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -264,7 +264,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -297,7 +297,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -330,7 +330,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -363,7 +363,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -386,8 +386,8 @@ ip link set eth4 address 00:00:0a:00:04:ff
 chmod u+x /retrieve_info.sh
 
 #P4_16 commands
-p4c-bm2-ss /root/p4/program_withmd5_payload_1024.p4 --emit-externs -o /root/p4/program_withmd5_payload_1024.json
-simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 /root/p4/program_withmd5_payload_1024.json -- --load-modules=/root/p4/definition.so &
+p4c-bm2-ss /root/p4/program_withsha256_payload_1024.p4 --emit-externs -o /root/p4/program_withsha256_payload_1024.json
+simple_switch -i 1@eth0 -i 2@eth1 -i 3@eth2 -i 4@eth3 /root/p4/program_withsha256_payload_1024.json -- --load-modules=/root/p4/definition.so &
 
 while [[ $(pgrep simple_switch) -eq 0 ]]; do sleep 1; done
 until simple_switch_CLI <<< "help"; do sleep 1; done
@@ -416,7 +416,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -449,7 +449,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -482,7 +482,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -515,7 +515,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -548,7 +548,7 @@ echo ""
 echo "Saving results."
 kathara exec router3 "./retrieve_info.sh" --no-stdout --no-stderr
     
-mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_md5.txt
+mv ./shared/results.txt ./test/results_d${data_size}_i${interval}_sha256.txt
 
 echo ""
 echo "Stopping kathara lab..."
@@ -578,10 +578,10 @@ until simple_switch_CLI <<< "help"; do sleep 1; done
 simple_switch_CLI <<< $(cat commands.txt)' > ./router3.startup
 
 cd ./test
-mkdir -p ./results_md5
-mv ./*_md5.txt ./results_md5/
-rename 's/_md5.txt/.txt/g' *
-./parse_results.py results_md5
+mkdir -p ./results_sha256
+mv ./*_sha256.txt ./results_sha256/
+rename 's/_sha256.txt/.txt/g' *
+./parse_results.py results_sha256
 
 echo ""
 echo "Done."
