@@ -580,7 +580,9 @@ simple_switch_CLI <<< $(cat commands.txt)' > ./router3.startup
 cd ./test
 mkdir -p ./results_sha256
 mv ./*_sha256.txt ./results_sha256/
+cd ./results_sha256
 rename 's/_sha256.txt/.txt/g' *
+cd ../
 ./parse_results.py results_sha256
 
 echo ""
