@@ -580,7 +580,9 @@ simple_switch_CLI <<< $(cat commands.txt)' > ./router3.startup
 cd ./test
 mkdir -p ./results_md5
 mv ./*_md5.txt ./results_md5/
+cd results_md5
 rename 's/_md5.txt/.txt/g' *
+cd ../
 ./parse_results.py results_md5
 
 echo ""
