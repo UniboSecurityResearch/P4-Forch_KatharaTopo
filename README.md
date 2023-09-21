@@ -1,5 +1,5 @@
 Exploiting Data Plane Programmability to Enhance Service Orchestration in the Edge: a focus on Industrial Security
 
-![][2]
+![][1]
 
-  [2]: media/topoIP.png 
+  [1]: media/topoIP.png 
