@@ -20,12 +20,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Add Kathara debian repository
-        uses: myci-actions/add-deb-repo@11
-        with:
-          repo: deb https://ppa.launchpadcontent.net/katharaframework/kathara/ubuntu jammy main
-          repo-name: katharaframework-ubuntu-kathara
-          keys-asc: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x646193862b759810
-          install: kathara
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 21805A48E6CBBA6B991ABE76646193862B759810
+          sudo add-apt-repository ppa:katharaframework/kathara
       - name: Install Kathara
         run: |
           sudo apt-get update
