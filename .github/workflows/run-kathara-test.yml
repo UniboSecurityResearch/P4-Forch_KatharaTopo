@@ -23,12 +23,12 @@ jobs:
           keys-asc: http://ppa.launchpad.net/katharaframework/kathara/ubuntu/dists/bionic/Release.gpg
           install: kathara      
       - name: Run kathara lab configuration and save exit status
-          shell: bash
-          run: kathara lstart --noterminals 
+        shell: bash
+        run: kathara lstart --noterminals 
             echo "status=$?" >> "$GITHUB_ENV"
       - name: Check kathara lstart exit code
-          shell: bash
-          if: ${{ status }} != 0
+        shell: bash
+        if: ${{ status }} != 0
           run: |
             echo "::error title={Kathara lstart error}::{Cannot start the lab with the current configuration}"
             exit 1
