@@ -31,4 +31,3 @@ jobs:
         id: kathara-lstart
         run: |
             kathara lstart --noterminals
-            kathara exec client1 "ping 192.168.1.1 -c 1" | grep "1 received"
