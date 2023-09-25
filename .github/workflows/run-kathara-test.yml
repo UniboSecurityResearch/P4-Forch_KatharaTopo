@@ -27,8 +27,8 @@ jobs:
         run: kathara lstart --noterminals 
             echo "status=$?" >> "$GITHUB_ENV"
       - name: Check kathara lstart exit code
-        shell: bash
         if: ${{ status }} != 0
+          shell: bash
           run: |
             echo "::error title={Kathara lstart error}::{Cannot start the lab with the current configuration}"
             exit 1
