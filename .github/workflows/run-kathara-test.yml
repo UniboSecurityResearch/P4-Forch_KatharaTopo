@@ -18,8 +18,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.5.3
         with:
-          fetch-depth: 0    
+          fetch-depth: 0
+      - name: Add Kathara debian repository
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 21805A48E6CBBA6B991ABE76646193862B759810
+          sudo add-apt-repository ppa:katharaframework/kathara
+      - name: Install Kathara
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y kathara      
       - name: Run kathara lab configuration and try to ping a server under the VPN
         id: kathara-lstart
         run: |
-            echo "0 received" | grep "1 received"
+            kathara lstart --noterminals
+            kathara exec client1 "ping 192.168.1.1 -c 1" | grep "1 received"
