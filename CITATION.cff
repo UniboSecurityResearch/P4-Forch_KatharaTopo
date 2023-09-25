@@ -8,7 +8,7 @@ authors:
   given-names: "Amir"
   orcid: "https://orcid.org/0000-0002-5560-9871"
 title: "P4-Forch_KatharaTopo"
-version: 1.0.0
-doi: 10.5281/zenodo.1234
-date-released: 2023-09-21
+version: 1.0.1
+doi: 10.5281/zenodo.8376994
+date-released: 2023-09-25
 url: "https://github.com/UniboSecurityResearch/P4-Forch_KatharaTopo"
