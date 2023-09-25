@@ -29,7 +29,8 @@ jobs:
           sudo apt-get install -y kathara      
       - name: Run kathara lab configuration and save exit status
         id: kathara-lstart
-        run: kathara lstart --noterminals 
+        run: |
+            kathara lstart --noterminals 
             echo "status=$?" >> "$GITHUB_OUTPUT"
       - name: Check kathara lstart exit code
         if: ${{ steps.kathara-lstart.outputs.status }} != 0
