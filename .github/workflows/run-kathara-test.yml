@@ -11,7 +11,7 @@ defaults:
 
 jobs:
   test-kathara-lab:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:
@@ -24,8 +24,12 @@ jobs:
         with:
           repo: deb https://ppa.launchpadcontent.net/katharaframework/kathara/ubuntu jammy main
           repo-name: katharaframework-ubuntu-kathara
-          keys-asc: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x21805a48e6cbba6b991abe76646193862b759810
-          install: kathara      
+          keys-asc: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x646193862b759810
+          install: kathara
+      - name: Install Kathara
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y kathara      
       - name: Run kathara lab configuration and save exit status
         id: kathara-lstart
         run: kathara lstart --noterminals 
