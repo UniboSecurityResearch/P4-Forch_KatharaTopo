@@ -18,22 +18,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.5.3
         with:
-          fetch-depth: 0
-      - name: Add Kathara debian repository
-        run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 21805A48E6CBBA6B991ABE76646193862B759810
-          sudo add-apt-repository ppa:katharaframework/kathara
-      - name: Install Kathara
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y kathara      
+          fetch-depth: 0    
       - name: Run kathara lab configuration and save exit status
         id: kathara-lstart
         run: |
-            kathara lstart --noterminals 
             echo "status=$?" >> "$GITHUB_OUTPUT"
+            echo "::set-output name=status::$?"
       - name: Check kathara lstart exit code
-        if: ${{ steps.kathara-lstart.outputs.status }} != 0
-        run: |
-          echo "::error title={Kathara lstart error}::{Cannot start the lab with the current configuration}"
-          exit 1
+        if: ${{ steps.kathara-lstart.outputs.status != 0 }}
+          run: |
+            echo "::error title={Kathara lstart error}::{Cannot start the lab with the current configuration}"
+            exit 1
