@@ -10,7 +10,7 @@ defaults:
     shell: bash
 
 jobs:
-  create-new-release:
+  test-kathara-lab:
     runs-on: ubuntu-latest
     permissions:
       contents: write
