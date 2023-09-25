@@ -32,6 +32,6 @@ jobs:
             echo "status=$?" >> "$GITHUB_OUTPUT"
       - name: Check kathara lstart exit code
         if: ${{ steps.kathara-lstart.outputs.status }} != 0
-          run: |
-            echo "::error title={Kathara lstart error}::{Cannot start the lab with the current configuration}"
-            exit 1
+        run: |
+          echo "::error title={Kathara lstart error}::{Cannot start the lab with the current configuration}"
+          exit 1
