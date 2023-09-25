@@ -40,5 +40,5 @@ ping 192.168.1.1
 
 To stop the topology, run:
 ```bash
-kathara lstop
+kathara lclean
 ```
