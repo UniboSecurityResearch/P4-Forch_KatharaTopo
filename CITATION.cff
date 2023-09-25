@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Rinieri"
+  given-names: "Lorenzo"
+  orcid: "https://orcid.org/0000-0003-1767-7256"
+- family-names: "Al Sadi"
+  given-names: "Amir"
+  orcid: "https://orcid.org/0000-0002-5560-9871"
+title: "P4-Forch_KatharaTopo"
+version: 1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2023-09-21
+url: "https://github.com/UniboSecurityResearch/P4-Forch_KatharaTopo"
