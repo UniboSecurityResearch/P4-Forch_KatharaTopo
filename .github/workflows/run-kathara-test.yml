@@ -1,0 +1,37 @@
+name: run-kathara-test
+
+on:
+  push:
+    branches:
+      - master
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test-kathara-lab:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Add Kathara debian repository
+        uses: myci-actions/add-deb-repo@11
+        with:
+          repo: deb https://ppa.launchpadcontent.net/katharaframework/kathara/ubuntu jammy main
+          repo-name: katharaframework-ubuntu-kathara
+          keys-asc: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x21805a48e6cbba6b991abe76646193862b759810
+          install: kathara      
+      - name: Run kathara lab configuration and save exit status
+        id: kathara-lstart
+        run: kathara lstart --noterminals 
+            echo "status=$?" >> "$GITHUB_OUTPUT"
+      - name: Check kathara lstart exit code
+        if: ${{ steps.kathara-lstart.outputs.status }} != 0
+        run: |
+          echo "::error title={Kathara lstart error}::{Cannot start the lab with the current configuration}"
+          exit 1
