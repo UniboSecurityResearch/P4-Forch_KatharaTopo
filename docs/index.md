@@ -14,7 +14,7 @@ Let us imagine a scenario in which a specialized worker requires to establish a 
 ## Description
 
 The topology was developed in [Kathara](https://www.kathara.org/), an open source project to deploy virtual networks. 
-![Topology](https://github.com/UniboSecurityResearch/P4-Forch_KatharaTopo/tree/master/docs/assets/images/Forch-Industrial-Topo.pdf)
+![Topology](https://github.com/UniboSecurityResearch/P4-Forch_KatharaTopo/tree/master/docs/assets/images/Forch-Industrial-Topo.png)
 
 <!-- ### Header 3
 
