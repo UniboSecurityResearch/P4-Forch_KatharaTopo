@@ -22,9 +22,9 @@ jobs:
       - name: Add Kathara debian repository
         uses: myci-actions/add-deb-repo@11
         with:
-          repo: deb http://ppa.launchpad.net/katharaframework/kathara/ubuntu bionic main 
-          repo-name: katharaframework-ubuntu-kathara-jammy.list
-          keys-asc: http://ppa.launchpad.net/katharaframework/kathara/ubuntu/dists/bionic/Release.gpg
+          repo: deb https://ppa.launchpadcontent.net/katharaframework/kathara/ubuntu jammy main
+          repo-name: katharaframework-ubuntu-kathara
+          keys-asc: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x21805a48e6cbba6b991abe76646193862b759810
           install: kathara      
       - name: Run kathara lab configuration and save exit status
         id: kathara-lstart
