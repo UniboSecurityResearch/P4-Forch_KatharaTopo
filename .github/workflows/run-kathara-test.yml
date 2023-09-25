@@ -22,8 +22,9 @@ jobs:
           repo-name: katharaframework-ubuntu-kathara-jammy.list
           keys-asc: http://ppa.launchpad.net/katharaframework/kathara/ubuntu/dists/bionic/Release.gpg
           install: kathara      
-      - name: Check if kathara lab configuration is valid by running it
-          run: kathara lstart --noterminals | echo "status=$?" >> "$GITHUB_ENV"
+      - name: Run kathara lab configuration and save exit status
+          run: kathara lstart --noterminals 
+            echo "status=$?" >> "$GITHUB_ENV"
       - name: Check kathara lstart exit code
           if: ${{ status }} != 0
           run: |
